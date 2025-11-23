@@ -76,10 +76,11 @@ def redeem(info):
                 trx = r.json().get("transaction_code", "N/A")
                 return True, f"BERHASIL | {info['name']} | Trx: {trx}"
             else:
-                return False, f"GAGAL {r.status_code} | {r.text[:100]}"
-        except:
+                # INI YANG BARU: FULL TEXT ERROR
+                return False, f"GAGAL {r.status_code}\n{r.text}"
+        except Exception as e:
             time.sleep(2)
-    return False, "KONEKSI GAGAL"
+    return False, "KONEKSI GAGAL SETELAH 3x COBA"
 
 # ================== JALANKAN BOT ==================
 print(f"Redeem Bot Start → {datetime.now():%d/%m/%Y %H:%M:%S}")

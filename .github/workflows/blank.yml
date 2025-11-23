@@ -1,18 +1,20 @@
-name: XL Redeem Ultra Fast – SETIAP 5 MENIT (WIB)
+name: XL Redeem Ultra Fast – SETIAP 10 MENIT (WIB)
 
 on:
   schedule:
-    # Jalankan setiap 5 menit di waktu Jakarta (WIB = UTC+7)
-    # Contoh: 00:02, 00:07, 00:12, ..., 23:57 WIB
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+    # Setiap 10 menit tepat (00:00, 00:10, 00:20, 00:30, 00:40, 00:50 WIB dst.)
+    - cron: '0,10,20,30,40,50 * * * *'   # Cara paling jelas & akurat
 
-  workflow_dispatch:  # Bisa klik manual kapan saja dari GitHub
+    # Alternatif lain yang sama hasilnya:
+    # - cron: '*/10 * * * *'
+
+  workflow_dispatch:  # Tetap bisa dijalankan manual
 
 jobs:
   redeem:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Jakarta                     # Semua log & waktu langsung jadi WIB
+      TZ: Asia/Jakarta                     # Log langsung jadi WIB
 
     steps:
       - name: Checkout repo
@@ -20,23 +22,21 @@ jobs:
 
       - name: Setup Python
         uses: actions/setup-python@v5
-        # v5 lebih baru & cepat
         with:
           python-version: '3.12'
 
       - name: Install requests
         run: pip install requests --quiet
 
-      - name: Jalankan Redeem Bot (Setiap 5 menit)
+      - name: Jalankan Redeem Bot (Setiap 10 menit)
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           FAMILY_CODE: ${{ secrets.FAMILY_CODE }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}   # Hanya 1 ID
+          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
         run: python redeem.py
 
-      # Bonus: bersihkan cache biar nggak penuh
       - name: Cleanup
         if: always()
         run: rm -rf /home/runner/.cache/pip || true

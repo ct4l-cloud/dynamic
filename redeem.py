@@ -12,14 +12,14 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_USER_ID   = os.getenv("TELEGRAM_USER_ID")        
 # ================== UBAH FILTER ORDER DI SINI SAJA ==================
 # Ganti sesuai yang kamu mau, contoh:
-#WANTED_ORDERS = [200, 199, 198]  # UBAH DI SINI SESUAI KEBUTUHAN!
+WANTED_ORDERS = [200, 199, 198]  # UBAH DI SINI SESUAI KEBUTUHAN!
 
 #Kuota Utama 1.25GB  order 200
 #Kuota Youtube & Tiktok 3.13GB  order 199
 #Kuota Malam 3.75GB order 198
 
 # WANTED_ORDERS = [1]             ← cuma order 1
-WANTED_ORDERS = None           # ← redeem SEMUA paket (tanpa filter)
+#WANTED_ORDERS = None           # ← redeem SEMUA paket (tanpa filter)
 
 # ================== KIRIM TELEGRAM (HANYA 1 USER) ==================
 def kirim_telegram(text):

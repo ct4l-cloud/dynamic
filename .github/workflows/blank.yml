@@ -1,0 +1,29 @@
+name: XL Redeem Auto Every 10 Minutes
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'     # Tiap 10 menit
+  workflow_dispatch:          # Bisa jalan manual
+
+jobs:
+  redeem:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run Redeem Bot
+        env:
+          REDEEM_URL: ${{ secrets.REDEEM_URL }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}        # optional
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}   # optional
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}       # optional
+        run: python redeem.py

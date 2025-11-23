@@ -1,18 +1,17 @@
-name: XL Redeem Ultra Fast – SETIAP 30 DETIK (WIB)
+name: XL Redeem Ultra Fast – SETIAP 5 MENIT (WIB)
 
 on:
   schedule:
-    # DUA CRON SEKALIGUS → HASILNYA = SETIAP 30 DETIK!
-    - cron: '0,30 * * * *'      # Menit 00 & 30 (UTC)
-    - cron: '15,45 * * * *'     # Menit 15 & 45 (UTC) → karena WIB = UTC+7, ini jadi pas 30 detik sekali di Jakarta!
+    # Setiap 5 menit sekali (WIB = UTC+7)
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'   # Ini akan jalan tepat setiap 5 menit di WIB
 
-  workflow_dispatch:          # Tetap bisa jalan manual
+  workflow_dispatch:          # Bisa tetap dijalankan manual kapan saja
 
 jobs:
   redeem:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Jakarta         # Semua waktu jadi WIB (Jakarta)
+      TZ: Asia/Jakarta         # Semua log dan waktu jadi WIB
 
     steps:
       - uses: actions/checkout@v4
@@ -25,7 +24,7 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Jalankan Redeem Bot (30 detik sekali)
+      - name: Jalankan Redeem Bot (5 menit sekali)
         env:
           REDEEM_URL: ${{ secrets.REDEEM_URL }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}

@@ -1,17 +1,23 @@
-name: XL Redeem Auto (Tiap 10 Menit)
+name: XL Redeem Auto – WAKTU JAKARTA (WIB)
 
 on:
   schedule:
-    - cron: '*/10 * * * *'    # Tiap 10 menit
-  workflow_dispatch:         # Bisa jalan manual dari GitHub
+    # JALAN SETIAP 10 MENIT MENGGUNAKAN WAKTU ASIA/JAKARTA (WIB = UTC+7)
+    - cron: '2,12,22,32,42,52 * * * *'    # ← INI YANG BENAR UNTUK WIB!
+
+  workflow_dispatch:   # biar bisa jalanin manual kapan saja
 
 jobs:
   redeem:
     runs-on: ubuntu-latest
+    # PAKSA GIT HUB PAKAI ZONA WAKTU JAKARTA (biar log juga sesuai WIB)
+    env:
+      TZ: Asia/Jakarta
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
@@ -19,10 +25,10 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Jalankan Redeem Bot
+      - name: Jalankan Redeem Bot (Waktu Jakarta)
         env:
           REDEEM_URL: ${{ secrets.REDEEM_URL }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}                  # optional
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}      # optional
+          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: python redeem.py

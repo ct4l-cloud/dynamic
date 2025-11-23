@@ -1,9 +1,9 @@
 name: XL Redeem Ultra Fast – SETIAP 10 MENIT (WIB)
 
 on:
-  schedule:
+#  schedule:
     # Setiap 10 menit tepat (00:00, 00:10, 00:20, 00:30, 00:40, 00:50 WIB dst.)
-    - cron: '0,10,20,30,40,50 * * * *'   # Cara paling jelas & akurat
+#    - cron: '0,10,20,30,40,50 * * * *'   # Cara paling jelas & akurat
 
     # Alternatif lain yang sama hasilnya:
     # - cron: '*/10 * * * *'

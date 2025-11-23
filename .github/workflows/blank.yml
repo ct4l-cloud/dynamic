@@ -1,10 +1,7 @@
 name: XL Redeem Ultra Fast – SETIAP 5 MENIT (WIB)
 
 on:
-  schedule:
-    # Setiap 5 menit sekali (WIB = UTC+7)
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'   # Ini akan jalan tepat setiap 5 menit di WIB
-
+  
   workflow_dispatch:          # Bisa tetap dijalankan manual kapan saja
 
 jobs:
